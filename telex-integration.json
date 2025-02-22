@@ -1,0 +1,73 @@
+{
+    "data": {
+      "date": {
+        "created_at": "2025-02-22",
+        "updated_at": "2025-02-22"
+      },
+      "descriptions": {
+        "app_description": "This integration allows seamless feedback submission and monitoring through Telex.",
+        "app_logo": "",
+        "app_name": "Telex Feedback Integration",
+        "app_url": "https://yourdomain.com",
+        "background_color": "#FFFFFF"
+      },
+      "integration_category": "Communication & Collaboration",
+      "integration_type": "output",
+      "is_active": true,
+      "output": [
+        {
+          "label": "telex_feedback_channel",
+          "value": true
+        }
+      ],
+      "key_features": [
+        "Automatic feedback submission to Telex.",
+        "Real-time feedback tracking and monitoring.",
+        "Configurable update intervals.",
+        "Role-based alert notifications."
+      ],
+      "permissions": {
+        "monitoring_user": {
+          "always_online": true,
+          "display_name": "Feedback Monitor"
+        }
+      },
+      "settings": [
+        {
+          "label": "interval",
+          "type": "text",
+          "required": true,
+          "default": "*/5 * * * *"
+        },
+        {
+          "label": "Enable Logging",
+          "type": "checkbox",
+          "required": false,
+          "default": true
+        },
+        {
+          "label": "Response Timeout",
+          "type": "number",
+          "required": true,
+          "default": 5000
+        },
+        {
+          "label": "Notification Level",
+          "type": "dropdown",
+          "required": true,
+          "default": "Low",
+          "options": ["High", "Medium", "Low"]
+        },
+        {
+          "label": "Notify Roles",
+          "type": "multi-checkbox",
+          "required": true,
+          "default": "Admin",
+          "options": ["Super-Admin", "Admin", "Manager", "Developer"]
+        }
+      ],
+      "tick_url": "https://yourdomain.com/api/telex/tick",
+      "target_url": "https://yourdomain.com/api/telex/data"
+    }
+  }
+  
