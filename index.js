@@ -55,8 +55,6 @@ const processFeedback = async () => {
     }
 };
 
-setInterval(processFeedback, 60000);
-
 // Target URL - for fetching data from the Google Sheets API
 app.get('/api/telex/data', async (req, res) =>{
     const responses = await fetchFormResponses();
@@ -67,6 +65,7 @@ app.get('/api/telex/data', async (req, res) =>{
 app.post('/api/telex/tick', async (req, res) => {
     console.log('Telex Tick Received');
     await processFeedback();
+    setInterval(processFeedback, 3600000);
     res.status(200).json({ message: 'Tick received, feedback processed!'});
 });
 

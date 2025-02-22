@@ -8,7 +8,7 @@
         "app_description": "This integration allows seamless feedback submission and monitoring through Telex.",
         "app_logo": "",
         "app_name": "Telex Feedback Integration",
-        "app_url": "https://yourdomain.com",
+        "app_url": "https://telex-feedback-integration.onrender.com",
         "background_color": "#FFFFFF"
       },
       "integration_category": "Communication & Collaboration",
@@ -66,8 +66,8 @@
           "options": ["Super-Admin", "Admin", "Manager", "Developer"]
         }
       ],
-      "tick_url": "https://yourdomain.com/api/telex/tick",
-      "target_url": "https://yourdomain.com/api/telex/data"
+      "tick_url": "https://telex-feedback-integration.onrender.com/api/telex/tick",
+      "target_url": "https://telex-feedback-integration.onrender.com/api/telex/data"
     }
   }
   
