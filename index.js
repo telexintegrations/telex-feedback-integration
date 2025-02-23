@@ -2,6 +2,7 @@ const express = require('express');
 const axios = require('axios');
 const { google } = require('googleapis');
 const integrationData = require('./telex-integration.json');
+const fs = require('fs');
 require('dotenv').config();
 
 const app = express();
@@ -9,6 +10,29 @@ const PORT = process.env.PORT || 3000;
 const SHEET_ID = process.env.SHEET_ID;
 const API_KEY = process.env.GOOGLE_API_KEY;
 const TELEX_WEBHOOK = process.env.TELEX_WEBHOOK;
+const PROCESSED_FILE = 'processed_feedback.json';
+
+const loadProcessedFeedback = () => {
+    if (!fs.existsSync(PROCESSED_FILE)) {
+        fs.writeFileSync(PROCESSED_FILE, JSON.stringify([]));
+        return [];
+    }
+    try {
+        const data = fs.readFileSync(PROCESSED_FILE, 'utf-8');
+        return data.trim() ? JSON.parse(data) : [];
+    } catch (error) {
+        console.error("Error reading processed feedback file:", error);
+        return [];
+    }
+}
+
+const saveProcessedFeedback = (processed) => {
+    try {
+        fs.writeFileSync(PROCESSED_FILE, JSON.stringify(processed, null, 2));
+    } catch (error) {
+        console.error("Error saving processed feedback:", error);
+    }
+}
 
 //Fetch Google Sheets Data
 const fetchFormResponses = async () => {
@@ -50,10 +74,20 @@ const sendToTelex = async (feedback) => {
 
 const processFeedback = async () => {
     const responses = await fetchFormResponses();
+    let processedTimestamps = loadProcessedFeedback();
     for (const feedback of responses) {
-        await sendToTelex(feedback);
+        if (!processedTimestamps.includes(feedback.timestamp)) {
+            const sent = await sendToTelex(feedback);
+            if (sent) {
+                processedTimestamps.push(feedback.timestamp);
+            }
+        }
     }
+
+    saveProcessedFeedback(processedTimestamps);
 };
+
+setInterval(processFeedback, 60000);
 
 // Target URL - for fetching data from the Google Sheets API
 app.get('/api/telex/data', async (req, res) =>{
@@ -65,7 +99,6 @@ app.get('/api/telex/data', async (req, res) =>{
 app.post('/api/telex/tick', async (req, res) => {
     console.log('Telex Tick Received');
     await processFeedback();
-    setInterval(processFeedback, 3600000);
     res.status(200).json({ message: 'Tick received, feedback processed!'});
 });
 
