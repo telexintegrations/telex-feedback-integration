@@ -57,13 +57,14 @@ const fetchFormResponses = async () => {
 //Send Data to Telex
 const sendToTelex = async (feedback) => {
     try {
-        const message = {
-            event_name: 'Feedback Submission',
-            message: `New Feedback: ${feedback.feedback}\nSubmitted at: ${feedback.timestamp}`,
-            status: 'success',
-            username: 'admin'
-        };
-        await axios.post(TELEX_WEBHOOK, message);
+        const eventName = encodeURIComponent('Feedback Submission!');
+        const message = encodeURIComponent(`New Feedback: ${feedback.feedback}\nSubmitted at: ${feedback.timestamp}`);
+        const status = 'success';
+        const username = 'admin';
+
+        const url = `${TELEX_WEBHOOK}?event_name=${eventName}&message=${message}&status=${status}&username=${username}`;
+
+        await axios.get(url);
         console.log('Feedback sent to Telex successfully!');
         return { success: true };
     } catch (error) {
