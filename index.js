@@ -141,7 +141,8 @@ app.get("/integration.json", (req, res) => {
                     default: "*/5 * * * *", // Every 5 minutes
                 },
             ],
-            tick_url: `${baseUrl}/tick`
+            tick_url: `${baseUrl}/tick`,
+            target_url: ''
         }
     });
 });
