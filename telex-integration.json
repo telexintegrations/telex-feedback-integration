@@ -6,7 +6,7 @@
       },
       "descriptions": {
         "app_description": "This integration allows seamless feedback submission and monitoring through Telex.",
-        "app_logo": "",
+        "app_logo": "https://telex-feedback-integration.onrender.com/logo.PNG",
         "app_name": "Telex Feedback Integration",
         "app_url": "https://telex-feedback-integration.onrender.com",
         "background_color": "#FFFFFF"
