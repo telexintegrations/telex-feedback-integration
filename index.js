@@ -102,7 +102,7 @@ const processFeedback = async (return_url, settings) => {
 };
 
 // Route to return integration.json
-app.post("/integration.json", (req, res) => {
+app.get("/integration.json", (req, res) => {
     const baseUrl = `${req.protocol}://${req.get("host")}`;
     res.status(200).json({
         data: {
