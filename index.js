@@ -12,6 +12,7 @@ const PROCESSED_FILE = "processed_feedback.json";
 
 app.use(cors());
 app.use(express.json());
+app.use(express.static("public"));
 
 // Load processed feedback timestamps
 const loadProcessedFeedback = () => {
@@ -58,8 +59,8 @@ const sendToTelex = async (feedback, return_url) => {
     try {
         const payload = {
             message: `New Feedback: ${feedback.feedback}\nSubmitted at: ${feedback.timestamp}`,
-            username: "Form Monitor Bot",
-            event_name: "form_feedback_event",
+            username: "Form Monitor",
+            event_name: "Feedback Submission",
             status: "success"
         };
         await axios.post(return_url, payload, {
@@ -102,7 +103,7 @@ const processFeedback = async (return_url, settings) => {
 };
 
 // Route to return integration.json
-app.get("/integration.json", (req, res) => {
+app.get("/telex-integration", (req, res) => {
     const baseUrl = `${req.protocol}://${req.get("host")}`;
     res.status(200).json({
         data: {
@@ -111,9 +112,9 @@ app.get("/integration.json", (req, res) => {
                 updated_at: "2025-02-22"
             },
             descriptions: {
-                app_name: "Telex Form Monitoring",
+                app_name: "Feedback Monitoring System",
                 app_description: "Automatically monitors feedback submissions and sends updates to Telex.",
-                app_logo: "https://telex-feedback-integration.onrender.com/logo.PNG",
+                app_logo: `${baseUrl}/logo.png`,
                 app_url: baseUrl,
                 background_color: "#FFFFFF"
             },
@@ -138,7 +139,7 @@ app.get("/integration.json", (req, res) => {
                     label: "interval",
                     type: "text",
                     required: true,
-                    default: "*/5 * * * *", // Every 5 minutes
+                    default: "*/1 * * * *", // Every 5 minutes
                 },
             ],
             tick_url: `${baseUrl}/tick`,
@@ -160,6 +161,8 @@ app.post("/tick", async (req, res) => {
 
     res.status(202).json({ status: "accepted" });
 });
+
+app.get('/', (req, res) => res.send('Telex Feedback Integration Running'));
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
