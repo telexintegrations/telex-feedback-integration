@@ -32,7 +32,6 @@ Ensure you have the following before setting up the integration:
    PORT=3000
    SHEET_ID=your_google_sheet_id
    GOOGLE_API_KEY=your_google_api_key
-   TELEX_WEBHOOK=your_telex_webhook_url
    ```
 
 4. **Run the integration:**
@@ -86,8 +85,8 @@ Example notification received in the Telex channel:
 
 ## Quick Test
 - Fill a feedback form [here](https://forms.gle/LRWZU2VegVwiXWcF9)
-- Confirm your response(s) [here](https://docs.google.com/spreadsheets/d/1d6tldVy6N-i5EwHtlkxvc5yxG1HN3S84no0bFH-wdzw/edit?usp=sharing) OR on Postman by fetching this GET URL: https://telex-feedback-integration.onrender.com/api/telex/data
-- The application will send new data to the Telex channel at the interval of 60 seconds OR you can manually initiate on Postman with this POST URL: https://telex-feedback-integration.onrender.com/api/telex/tick
+- Confirm your response(s) [here](https://docs.google.com/spreadsheets/d/1d6tldVy6N-i5EwHtlkxvc5yxG1HN3S84no0bFH-wdzw/edit?usp=sharing)
+- The application will send new data to the Telex channel at the interval of 60 seconds OR you can manually initiate on Postman with this POST URL: https://telex-feedback-integration.onrender.com/tick
 - Check the Test channel ```#feedback-notifications``` on the telex-integration-test-3 organization for notifications
 
 ## License
